@@ -124,17 +124,6 @@ export default function PocketProfile() {
     return;
   }
 
-  try {
-    console.log('✅ Validation passed, saving to Supabase...');
-    
-    // ... rest of your existing code ...
-    
-  } catch (error) {
-    console.error('❌ Error saving profile:', error);
-    alert('Failed to save your profile. Please try again.');
-    setIsGenerating(false);
-  }
-};
 
     try {
       console.log('✅ Validation passed, saving to Supabase...');
