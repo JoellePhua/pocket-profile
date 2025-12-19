@@ -1,5 +1,7 @@
+// Force rebuild - Dec 19 2024
 // @ts-nocheck
-'use client';
+'use client'
+export const dynamic = 'force-dynamic'; 
 import React, { useState, useEffect } from 'react';
 import { Upload, Mail, Linkedin, Instagram, FileText, Briefcase, ArrowLeft } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
@@ -19,6 +21,12 @@ const generateMinisiteId = () => {
 };
 
 export default function PocketProfile() {
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const [step, setStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
   
@@ -111,7 +119,7 @@ export default function PocketProfile() {
            hasRealLink;
   };
 
-  const handleGenerateQRCode = async () => {
+  const handleGenerateQRCode: () => Promise<void> = async () => {
   console.log('🎯 Generating profile...');
   
   // Prevent duplicate submissions
@@ -127,8 +135,32 @@ export default function PocketProfile() {
   try {
     console.log('✅ Validation passed, saving to Supabase...');
     
-    // ... rest of your existing code ...
+    // Filter out placeholder values
+    const placeholderValues = ['you@example.com', 'linkedin.com/in/yourprofile', 'instagram.com/yourhandle', 'yourportfolio.com'];
     
+    // Save to Supabase (public insert)
+    const { data, error } = await supabase
+      .from('minisites')
+      .insert({
+        minisite_id: profileData.minisiteId,
+        name: profileData.name,
+        bio: profileData.bio,
+        photo_url: profileData.photo,
+        email: (profileData.email && !placeholderValues.includes(profileData.email)) ? profileData.email : null,
+        linkedin: (profileData.linkedin && !placeholderValues.includes(profileData.linkedin)) ? profileData.linkedin : null,
+        instagram: (profileData.instagram && !placeholderValues.includes(profileData.instagram)) ? profileData.instagram : null,
+        portfolio: (profileData.portfolio && !placeholderValues.includes(profileData.portfolio)) ? profileData.portfolio : null,
+        cv: profileData.cv || null,
+        theme: profileData.theme,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+
+    if (error) throw error;
+
+    console.log('✅ Profile saved successfully!');
+    setStep(2);
+    setIsGenerating(false);
   } catch (error) {
     console.error('❌ Error saving profile:', error);
     alert('Failed to save your profile. Please try again.');
@@ -136,40 +168,7 @@ export default function PocketProfile() {
   }
 };
 
-    try {
-      console.log('✅ Validation passed, saving to Supabase...');
-      
-      // Filter out placeholder values
-      const placeholderValues = ['you@example.com', 'linkedin.com/in/yourprofile', 'instagram.com/yourhandle', 'yourportfolio.com'];
-      
-      // Save to Supabase (public insert)
-      const { data, error } = await supabase
-        .from('minisites')
-        .insert({
-          minisite_id: profileData.minisiteId,
-          name: profileData.name,
-          bio: profileData.bio,
-          photo_url: profileData.photo,
-          email: (profileData.email && !placeholderValues.includes(profileData.email)) ? profileData.email : null,
-          linkedin: (profileData.linkedin && !placeholderValues.includes(profileData.linkedin)) ? profileData.linkedin : null,
-          instagram: (profileData.instagram && !placeholderValues.includes(profileData.instagram)) ? profileData.instagram : null,
-          portfolio: (profileData.portfolio && !placeholderValues.includes(profileData.portfolio)) ? profileData.portfolio : null,
-          cv: profileData.cv || null,
-          theme: profileData.theme,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        });
-
-      if (error) throw error;
-
-      console.log('✅ Profile saved successfully!');
-      setStep(2);
-    } catch (error) {
-      console.error('❌ Error saving profile:', error);
-      alert('Failed to save your profile. Please try again.');
-    }
-  };
-
+    
   const handleBack = () => {
     setStep(1);
   };
@@ -191,6 +190,13 @@ export default function PocketProfile() {
     setStep(1);
   };
 
+  // ... all your functions like handleGenerateQRCode, handleBack, etc.
+
+  // Add this RIGHT HERE, before the existing return
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: '#f9fafb' }}>
       {step === 1 && (
@@ -202,7 +208,7 @@ export default function PocketProfile() {
           handleGenerateQRCode={handleGenerateQRCode}
           isFormValid={isStep1Valid()}
         />
-      )}
+      )} 
 
       {step === 2 && (
         <Step2 
