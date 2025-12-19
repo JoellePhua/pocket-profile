@@ -1,4 +1,4 @@
-@ts-nocheck
+// @ts-nocheck
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Upload, Mail, Linkedin, Instagram, FileText, Briefcase, ArrowLeft } from 'lucide-react';
