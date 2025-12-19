@@ -20,6 +20,7 @@ const generateMinisiteId = () => {
 
 export default function PocketProfile() {
   const [step, setStep] = useState(1);
+  const [isGenerating, setIsGenerating] = useState(false);
   
   const [profileData, setProfileData] = useState({
     photo: '', 
@@ -111,12 +112,29 @@ export default function PocketProfile() {
   };
 
   const handleGenerateQRCode = async () => {
-    console.log('🎯 Generating profile...');
+  console.log('🎯 Generating profile...');
+  
+  // Prevent duplicate submissions
+  if (isGenerating) return;
+  setIsGenerating(true);
+
+  if (!validateStep1()) {
+    console.log('❌ Validation failed');
+    setIsGenerating(false);
+    return;
+  }
+
+  try {
+    console.log('✅ Validation passed, saving to Supabase...');
     
-    if (!validateStep1()) {
-      console.log('❌ Validation failed');
-      return;
-    }
+    // ... rest of your existing code ...
+    
+  } catch (error) {
+    console.error('❌ Error saving profile:', error);
+    alert('Failed to save your profile. Please try again.');
+    setIsGenerating(false);
+  }
+};
 
     try {
       console.log('✅ Validation passed, saving to Supabase...');
@@ -563,23 +581,16 @@ function Step1({ profileData, errors, handlePhotoUpload, handleInputChange, hand
 
         {/* CTA Button */}
         <button
-          onClick={handleGenerateQRCode}
-          disabled={!isFormValid}
-          style={{
-            width: '100%',
-            padding: '16px',
-            fontSize: '16px',
-            fontWeight: '600',
-            background: isFormValid ? '#1e1e1e' : '#d1d5db',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: isFormValid ? 'pointer' : 'not-allowed',
-            opacity: isFormValid ? 1 : 0.6
-          }}
-        >
-          Generate QR Code →
-        </button>
+  onClick={handleGenerateQRCode}
+  disabled={isGenerating}
+  style={{
+    // ... existing styles ...
+    opacity: isGenerating ? 0.6 : 1,
+    cursor: isGenerating ? 'not-allowed' : 'pointer'
+  }}
+>
+  {isGenerating ? 'Generating...' : 'Generate QR Code & Wallpaper'}
+</button>
         {!isFormValid && (
           <p style={{ 
             color: '#999', 
@@ -627,7 +638,7 @@ function Step2({ profileData, handleBack, handleStartOver }) {
   }, []);
 
   const generateQRCode = async () => {
-    const profileUrl = `https://pocketprofileapp.com/${profileData.minisiteId}`;
+    const profileUrl = `${window.location.origin}/${profileData.minisiteId}`;
     
     try {
       const qrDataUrl = await QRCode.toDataURL(profileUrl, {
