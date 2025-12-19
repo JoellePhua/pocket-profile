@@ -16,10 +16,31 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // MINISITE PREVIEW COMPONENT
 // ============================================
 function MinisitePreview({ profileData }: { profileData: any }) {
-const theme = (profileData.theme || 'light') as 'light' | 'dark' | 'retro';
-  
-  // Theme configurations
-  const themes = {
+type ThemeConfig = {
+  light: {
+    container: { background: string; color: string; backgroundImage?: string };
+    photo: { border: string; borderRadius: string; clipPath: string };
+    name: { color: string; fontFamily: string };
+    bio: { color: string };
+    link: { background: string; color: string; border: string };
+  };
+  dark: {
+    container: { background: string; color: string; backgroundImage?: string };
+    photo: { border: string; borderRadius: string; clipPath: string };
+    name: { color: string; fontFamily: string };
+    bio: { color: string };
+    link: { background: string; color: string; border: string };
+  };
+  retro: {
+    container: { background: string; color: string; backgroundImage?: string };
+    photo: { border: string; borderRadius: string; clipPath: string };
+    name: { color: string; fontFamily: string };
+    bio: { color: string };
+    link: { background: string; color: string; border: string };
+  };
+};
+
+const themes: ThemeConfig = {
     light: {
       container: {
         background: 'white',
