@@ -19,21 +19,21 @@ function MinisitePreview({ profileData }: { profileData: any }) {
 type ThemeConfig = {
   light: {
     container: { background: string; color: string; backgroundImage?: string };
-    photo: { border: string; borderRadius: string; clipPath: string };
+    photo: { border: string; borderRadius: string; clipPath: string; boxShadow?: string };
     name: { color: string; fontFamily: string };
     bio: { color: string };
     link: { background: string; color: string; border: string };
   };
   dark: {
     container: { background: string; color: string; backgroundImage?: string };
-    photo: { border: string; borderRadius: string; clipPath: string };
+    photo: { border: string; borderRadius: string; clipPath: string; boxShadow?: string };
     name: { color: string; fontFamily: string };
     bio: { color: string };
     link: { background: string; color: string; border: string };
   };
   retro: {
     container: { background: string; color: string; backgroundImage?: string };
-    photo: { border: string; borderRadius: string; clipPath: string };
+    photo: { border: string; borderRadius: string; clipPath: string; boxShadow?: string };
     name: { color: string; fontFamily: string };
     bio: { color: string };
     link: { background: string; color: string; border: string };
