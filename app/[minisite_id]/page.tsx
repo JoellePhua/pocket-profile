@@ -15,7 +15,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // ============================================
 // MINISITE PREVIEW COMPONENT
 // ============================================
-function MinisitePreview({ profileData }) {
+function MinisitePreview({ profileData }: { profileData: any }) {
   const theme = profileData.theme || 'light';
   
   // Theme configurations
