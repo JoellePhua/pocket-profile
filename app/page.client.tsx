@@ -69,7 +69,7 @@ export function PocketProfileClient() {
     }
   };
 
-  const handleInputChange = (field, value) => {
+const handleInputChange = (field: string, value: string) => {
     setProfileData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
