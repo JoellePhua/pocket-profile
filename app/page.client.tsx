@@ -36,7 +36,7 @@ export function PocketProfileClient() {
   });
   const [errors, setErrors] = useState({});
 
-  const handlePhotoUpload = async (e) => {
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0];
     if (!file) return;
 
