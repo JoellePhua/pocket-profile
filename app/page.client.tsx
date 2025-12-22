@@ -55,7 +55,7 @@ export function PocketProfileClient() {
     try {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfileData(prev => ({ ...prev, photo: e.target.result }));
+        setProfileData(prev => ({ ...prev, photo: typeof e.target.result === 'string' ? e.target.result : '' }));
         setErrors(prev => ({ ...prev, photo: '' }));
         console.log('Photo uploaded successfully (base64)');
       };
