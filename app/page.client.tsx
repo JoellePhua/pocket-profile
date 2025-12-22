@@ -34,7 +34,7 @@ export function PocketProfileClient() {
     minisiteId: generateMinisiteId(),
     theme: 'light'
   });
-  const [errors, setErrors] = useState({});
+const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
