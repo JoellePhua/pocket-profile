@@ -77,7 +77,7 @@ const handleInputChange = (field: string, value: string) => {
   };
 
   const validateStep1 = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
     if (!profileData.photo) newErrors.photo = 'Profile photo is required';
     if (!profileData.name.trim() || profileData.name === 'Your Name') newErrors.name = 'Name is required';
     if (!profileData.bio.trim() || profileData.bio === 'Add a short bio about yourself here') newErrors.bio = 'Bio is required';
