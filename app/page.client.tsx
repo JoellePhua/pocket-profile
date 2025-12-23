@@ -191,12 +191,13 @@ const handleInputChange = (field: string, value: string) => {
     <div style={{ minHeight: '100vh', background: '#f9fafb' }}>
       {step === 1 && (
         <Step1 
-          profileData={profileData}
-          errors={errors}
-          handlePhotoUpload={handlePhotoUpload}
-          handleInputChange={handleInputChange}
-          handleGenerateQRCode={handleGenerateQRCode}
-          isFormValid={isStep1Valid()}
+        profileData={profileData}
+        errors={errors}
+        handlePhotoUpload={handlePhotoUpload}
+        handleInputChange={handleInputChange}
+        handleGenerateQRCode={handleGenerateQRCode}
+        isFormValid={isStep1Valid()}
+        isGenerating={isGenerating}
         />
       )} 
 
@@ -212,8 +213,7 @@ const handleInputChange = (field: string, value: string) => {
 }
 
 // Step 1: Create Profile
-function Step1({ profileData, errors, handlePhotoUpload, handleInputChange, handleGenerateQRCode, isFormValid }) {
-  return (
+function Step1({ profileData, errors, handlePhotoUpload, handleInputChange, handleGenerateQRCode, isFormValid, isGenerating }) {  return (
     <div style={{ display: 'flex', minHeight: '100vh', flexWrap: 'wrap' }}>
       {/* Left side - Form */}
       <div style={{ 
