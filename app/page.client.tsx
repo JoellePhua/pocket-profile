@@ -211,10 +211,17 @@ const handleInputChange = (field: string, value: string) => {
     </div>
   );
 }
-
+interface Step1Props {
+  profileData: ProfileData;
+  errors: Record<string, string>;
+  handlePhotoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (field: string, value: string) => void;
+  handleGenerateQRCode: () => void;
+  isFormValid: boolean;
+  isGenerating: boolean;
+}
 // Step 1: Create Profile
-function Step1({ profileData, errors, handlePhotoUpload, handleInputChange, handleGenerateQRCode, isFormValid, isGenerating }) {  return (
-    <div style={{ display: 'flex', minHeight: '100vh', flexWrap: 'wrap' }}>
+function Step1({ profileData, errors, handlePhotoUpload, handleInputChange, handleGenerateQRCode, isFormValid, isGenerating }: Step1Props) {    <div style={{ display: 'flex', minHeight: '100vh', flexWrap: 'wrap' }}>
       {/* Left side - Form */}
       <div style={{ 
         flex: '1 1 500px',
